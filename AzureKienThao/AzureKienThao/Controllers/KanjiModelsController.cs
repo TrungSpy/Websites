@@ -17,41 +17,35 @@ namespace AzureKienThao.Controllers
 
         // GET: KanjiModels
         //Name 	SoundJa 	SoundVn 	MeaningEn 	MeaningVi 
-        
-        
-        public async Task<ActionResult> Index(string name, string soundja, string soundvn, string meaningen, string meaningvi)
+       
+        public async Task<ActionResult> Index(string query, bool inname = true, bool insoundja = true,
+            bool insoundvn = true, bool inmeaningen = true, bool inmeaningvi = true)
         {
-            var kanjis = db.Kanjis.Where(x=>true);
-            bool isFiltered = false;
             Random rand = new Random();
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                kanjis = kanjis.Where(x => x.Name == name);
-                isFiltered = true;
-            }
-
-            if (!string.IsNullOrEmpty(soundja))
-            {
-                kanjis = kanjis.Where(x => x.SoundJa.Contains(soundja) || x.SoundRo.Contains(soundja));
-                isFiltered = true;
-            }
-
-            if (!string.IsNullOrEmpty(soundvn))
-            {
-                kanjis = kanjis.Where(x => x.SoundVn.Contains(soundvn));
-                isFiltered = true;
-            }
-
-            if (isFiltered)
-            {
-                return View(await kanjis.Include("Words").ToListAsync());
-            }
-            else
+            query = query==null ? query: query.Trim();
+            var kanjis = db.Kanjis.Where(x=> 
+                (string.IsNullOrEmpty(query)) ||
+                (inname&&query.Contains(x.Name)) ||
+                (insoundja && x.SoundJa.Contains(query) || x.SoundRo.Contains(query)) ||
+                (insoundvn && x.SoundVn.Contains(query)) ||
+                (inmeaningen && x.MeaningEn.Contains(query)) ||
+                (inmeaningvi && x.MeaningVi.Contains(query))
+                );
+            ViewBag.query = query;
+            ViewBag.inname = inname;
+            ViewBag.insoundja = insoundja;
+            ViewBag.insoundvn = insoundvn;
+            ViewBag.inmeaningen = inmeaningen;
+            ViewBag.inmeaningvi = inmeaningvi;
+            if (string.IsNullOrEmpty(query))
             {
                 var temp = await kanjis.Include("Words").Take(40).ToListAsync();
                 var list = temp.OrderBy(x => rand.Next());
                 return View(list);
+            }
+            else
+            {
+                return View(await kanjis.ToListAsync());
             }
         }
 

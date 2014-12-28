@@ -5,37 +5,34 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create") | <button type="button" id="clearBtn">Clear</button>
+</p>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<button type="button" id="clearBtn">Clear</button>
-
-<table class="table">
     @using (Html.BeginForm("Index", "KanjiModels", FormMethod.Get))
     {
-        <tr>
-            <th>
-                @Html.TextBox("name")
-            </th>
-            <th>
-                @Html.TextBox("soundja")
-            </th>
-            <th>
-            </th>
-            <th>
-                @Html.TextBox("soundvn")
-            </th>
-            <th>
-                @Html.TextBox("meaningen")
-            </th>
-            <th>
-                @Html.TextBox("meaningvi")
-            </th>
-            <th><input type="submit" value="Filter" /></th>
-        </tr>
+        @Html.TextBox("query")
+        <input type="submit" value="Search"/>
+    @Html.DisplayNameFor(model => model.Name)
+        @Html.CheckBox("inname")
+    @Html.DisplayNameFor(model => model.SoundJa)
+
+        @Html.CheckBox("insoundja")
+    @Html.DisplayNameFor(model => model.SoundVn)
+
+        @Html.CheckBox("insoundvn")
+    @Html.DisplayNameFor(model => model.MeaningEn)
+
+        @Html.CheckBox("inmeaningen")
+    @Html.DisplayNameFor(model => model.MeaningVi)
+
+        @Html.CheckBox("inmeaningvi")
     }
+
+</p>
+
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -70,7 +67,7 @@
             <td>
                 @foreach (WordModel word in item.Words)
                 {
-                    <p>@(word.Name+", "+word.SoundJa+", "+word.MeaningEn)</p>
+                    <p><b>@word.Name, </b> @(word.SoundJa+", "+word.MeaningEn)</p>
                 }
             </td>
             <td>
@@ -84,15 +81,14 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
             </td>
         </tr>
     }
 </table>
 
 <style type="text/css">
-    td,input{
+    td{
         width:5em;
     }
     td:nth-child(3){
