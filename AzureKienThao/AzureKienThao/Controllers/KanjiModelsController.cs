@@ -17,10 +17,10 @@ namespace AzureKienThao.Controllers
 
         // GET: KanjiModels
         //Name 	SoundJa 	SoundVn 	MeaningEn 	MeaningVi 
-       
         public async Task<ActionResult> Index(string query, bool inname = true, bool insoundja = true,
             bool insoundvn = true, bool inmeaningen = true, bool inmeaningvi = true)
         {
+ 
             Random rand = new Random();
             query = query==null ? query: query.Trim();
             var kanjis = db.Kanjis.Where(x=> 
@@ -37,15 +37,28 @@ namespace AzureKienThao.Controllers
             ViewBag.insoundvn = insoundvn;
             ViewBag.inmeaningen = inmeaningen;
             ViewBag.inmeaningvi = inmeaningvi;
+
+            IEnumerable<KanjiModel> rets = null;
+            ViewBag.SoundVnSummary = "";
             if (string.IsNullOrEmpty(query))
             {
-                var temp = await kanjis.Include("Words").Take(40).ToListAsync();
-                var list = temp.OrderBy(x => rand.Next());
-                return View(list);
+                rets = await kanjis.Include("Words").OrderBy(x=>Guid.NewGuid()).Take(5).ToListAsync();              
             }
             else
             {
-                return View(await kanjis.ToListAsync());
+                rets = await kanjis.ToListAsync();
+                if (inname)
+                {
+                    ViewBag.SoundVnSummary = string.Join(" ", rets.Select(x => x.SoundVn));
+                }
+            }
+            if (Request.Browser.IsMobileDevice)
+            {
+                return View("IndexMobile", rets);
+            }
+            else
+            {
+                return View(rets);
             }
         }
 

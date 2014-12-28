@@ -18,7 +18,7 @@ namespace AzureKienThao.Background
         public void Execute()
         {
             /////// Create context
-            DictionaryContext context = new DictionaryContext();
+            DictionaryContext context = new DictionaryContext("DictionaryJaConnection");
             context.Database.CreateIfNotExists();
 
             /////// Prepare kanjis

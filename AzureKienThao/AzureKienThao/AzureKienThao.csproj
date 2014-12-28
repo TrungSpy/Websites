@@ -250,6 +250,7 @@
     <Content Include="Views\KanjiModels\Details.cshtml" />
     <Content Include="Views\KanjiModels\Edit.cshtml" />
     <Content Include="Views\KanjiModels\Index.cshtml" />
+    <Content Include="Views\KanjiModels\IndexMobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

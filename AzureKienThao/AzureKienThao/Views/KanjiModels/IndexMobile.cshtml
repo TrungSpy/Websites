@@ -1,0 +1,81 @@
+﻿@model IEnumerable<AzureKienThao.Domain.Models.KanjiModel>
+@using AzureKienThao.Domain.Models
+
+@{
+    ViewBag.Title = "IndexMobile";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create") | <button type="button" id="clearBtn">Clear</button>
+</p>
+
+<p>
+    @using (Html.BeginForm("Index", "KanjiModels", FormMethod.Get))
+    {
+        @Html.TextBox("query")
+        <input type="submit" value="Search" />
+    }
+</p>
+<p>
+    @ViewBag.SoundVnSummary
+</p>
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="kanji-name">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoundJa)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoundVn)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeaningEn)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeaningVi)
+            </td>
+        </tr>
+        int i = 0;
+        foreach (WordModel word in item.Words)
+        {
+            if (i++ > 3)
+            {
+                break;
+            }
+            <tr>
+                <td>
+                    <b>@word.Name, </b> @(word.SoundJa + ", " + word.MeaningEn)
+                </td>
+            </tr>
+        }
+    }
+</table>
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    $(function () {
+        $("#clearBtn").on("click", function () {
+            $("input[type=text]").val("");
+        });
+    });
+</script>
+
+<style type="text/css">
+    .kanji-name{
+        color:red;
+        font-size:150%;
+    }
+</style>
