@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -18,21 +19,26 @@ namespace AzureKienThao.Domain.Models
         public int Id { get; set; }
         [Index(IsUnique=true)]
         [MaxLength(1)]
+        [DisplayName("Kanji")]
         public string Name { get; set; }
         [Index]
         [MaxLength(200)]
+        [DisplayName("Kana")]
         public string SoundJa { get; set; }
         [Index]
         [MaxLength(200)]
         public string SoundRo { get; set; }
         [Index]
         [MaxLength(50)]
+        [DisplayName("Han Viet")]
         public string SoundVn { get; set; }
         [Index]
         [MaxLength(200)]
+        [DisplayName("English")]
         public string MeaningEn { get; set; }
         [Index]
         [MaxLength(200)]
+        [DisplayName("Vietnamese")]
         public string MeaningVi { get; set; }
         public virtual ICollection<WordModel> Words {get; set;}
 
