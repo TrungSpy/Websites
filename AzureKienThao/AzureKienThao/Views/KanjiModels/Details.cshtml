@@ -1,0 +1,58 @@
+﻿@model AzureKienThao.Domain.Models.KanjiModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>KanjiModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoundJa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoundJa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoundVn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoundVn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MeaningEn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MeaningEn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MeaningVi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MeaningVi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

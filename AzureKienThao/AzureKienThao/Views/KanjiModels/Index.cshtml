@@ -1,0 +1,111 @@
+﻿@model IEnumerable<AzureKienThao.Domain.Models.KanjiModel>
+@using AzureKienThao.Domain.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<button type="button" id="clearBtn">Clear</button>
+
+<table class="table">
+    @using (Html.BeginForm("Index", "KanjiModels", FormMethod.Get))
+    {
+        <tr>
+            <th>
+                @Html.TextBox("name")
+            </th>
+            <th>
+                @Html.TextBox("soundja")
+            </th>
+            <th>
+            </th>
+            <th>
+                @Html.TextBox("soundvn")
+            </th>
+            <th>
+                @Html.TextBox("meaningen")
+            </th>
+            <th>
+                @Html.TextBox("meaningvi")
+            </th>
+            <th><input type="submit" value="Filter" /></th>
+        </tr>
+    }
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoundJa)
+        </th>
+        <th>
+            @Html.Label("Related Words")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SoundVn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MeaningEn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MeaningVi)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoundJa)
+            </td>
+            <td>
+                @foreach (WordModel word in item.Words)
+                {
+                    <p>@(word.Name+", "+word.SoundJa+", "+word.MeaningEn)</p>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoundVn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeaningEn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeaningVi)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+<style type="text/css">
+    td,input{
+        width:5em;
+    }
+    td:nth-child(3){
+        width:20em;
+    }
+</style>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    $(function () {
+        $("#clearBtn").on("click", function () {
+            $("input[type=text]").val("");
+        });
+    });
+</script>

@@ -1,0 +1,21 @@
+{
+    "environmentSettings": {
+        "webSite": {
+            "name": "KienThao",
+            "location": "Japan East"
+        },
+        "databases": [
+            {
+                "connectionStringName": "DefaultConnection",
+                "databaseName": "KienThao_db",
+                "serverName": "z1fdbblg8t",
+                "user": "letrungkien7",
+                "password": "",
+                "edition": "",
+                "size": "",
+                "collation": "",
+                "location": "Japan East"
+            }
+        ]
+    }
+}
