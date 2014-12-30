@@ -22,7 +22,7 @@ namespace AzureKienThao.Controllers
         {
  
             Random rand = new Random();
-            query = query==null ? query: query.Trim();
+            query = query == null ? query : query.ToLower().Trim();
             var kanjis = db.Kanjis.Where(x=> 
                 (string.IsNullOrEmpty(query)) ||
                 (inname&&query.Contains(x.Name)) ||
@@ -101,6 +101,7 @@ namespace AzureKienThao.Controllers
         }
 
         // GET: KanjiModels/Edit/5
+        [Authorize(Roles="Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -118,6 +119,7 @@ namespace AzureKienThao.Controllers
         // POST: KanjiModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Name,SoundJa,SoundVn,MeaningEn,MeaningVi")] KanjiModel kanjiModel)
@@ -131,7 +133,8 @@ namespace AzureKienThao.Controllers
             return View(kanjiModel);
         }
 
-        // GET: KanjiModels/Delete/5
+       [Authorize(Roles = "Admin")]
+     // GET: KanjiModels/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,7 +148,7 @@ namespace AzureKienThao.Controllers
             }
             return View(kanjiModel);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: KanjiModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
